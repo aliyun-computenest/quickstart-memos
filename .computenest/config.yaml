@@ -143,7 +143,7 @@ Service:
   ServiceType: private
   ServiceInfo:
     - Agreements: []
-      Image: resources/icons/service_logo_zh-CN.png
+      Image: resources/icons/service_logo.jpg
       Locale: zh-CN
       Name: Memos社区版
       ShortDescription: Memos 是一款注重隐私的轻量级笔记解决方案，可让您轻松捕捉和分享您的想法。
