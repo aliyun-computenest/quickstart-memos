@@ -3,10 +3,6 @@ Service:
   DeployType: ros
   DeployMetadata:
     SupplierDeployMetadata:
-      ArtifactRelation:
-        centos_7:
-          ArtifactId: ${Artifact.Artifact.ArtifactId}
-          ArtifactVersion: ${Artifact.Artifact.ArtifactVersion}
       SupplierTemplateConfigs:
         - Name: 单机版
           PredefinedParameters:
@@ -154,33 +150,3 @@ Service:
       Softwares: []
   ShareType: Public
   ApprovalType: Manual
-Artifact:
-  Artifact:
-    ArtifactType: EcsImage
-    ArtifactName: memos
-    Description: memos
-    ArtifactProperty:
-      RegionId: ${ImageBuilder.EcsImage.RegionId}
-      ImageId: ${ImageBuilder.EcsImage.SourceImageId}
-ImageBuilder:
-  EcsImage:
-    RegionId: ap-southeast-1
-    SourceImageId: ubuntu_24_04_x64_20G_alibase_20250317.vhd
-    SystemDiskSize: 40
-    InstanceType: ecs.c6.large
-    InternetMaxBandwidthOut: 10
-    CommandType: RunShellScript
-    Timeout: 10800
-    Tags: [ ]
-    CommandContent: |-
-        # 安装docker-ce
-        apt-get update
-        apt-get -y install apt-transport-https ca-certificates curl software-properties-common
-        curl -fsSL http://mirrors.cloud.aliyuncs.com/docker-ce/linux/ubuntu/gpg | apt-key add -
-        add-apt-repository -y "deb [arch=$(dpkg --print-architecture)] http://mirrors.cloud.aliyuncs.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
-        apt-get -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-        sudo systemctl enable --now docker.service
-
-        git clone https://github.com/usememos/memos.git
-        cd /root/memos/scripts
-        docker compose up -d
