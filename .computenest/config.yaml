@@ -70,7 +70,7 @@ Service:
             - cn-heyuan
     TemplateConfigs:
       - Name: 单机版
-        Url: ros_templates/template1.yaml
+        Url: ros_templates/template.yaml
         AllowedRegions:
           - cn-beijing
           - cn-hangzhou
@@ -149,8 +149,8 @@ Service:
     - Agreements: []
       Image: resources/icons/service_logo_zh-CN.png
       Locale: zh-CN
-      Name: Open WebUI高德MCP
-      ShortDescription: 使用AI模型，引入高德地图MCP服务，制作AI Agent，可以理解用户意图，同时使用高德地图精确的地理位置信息、天气查询能力、骑行/步行/驾车路径规划能力、周边搜索等能力，为用户提供精确、真实的出行、游玩建议。
+      Name: Memos社区版
+      ShortDescription: Memos 是一款注重隐私的轻量级笔记解决方案，可让您轻松捕捉和分享您的想法。
       Softwares: []
   ShareType: Public
   ApprovalType: Manual
