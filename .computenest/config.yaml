@@ -126,8 +126,7 @@ Service:
               - PayPeriod
               - PayType
             Type: Custom
-        ArchitectureDiagramUrl: 
-          https://service-info-private.oss-cn-hangzhou.aliyuncs.com/1853370294850618/architecture/架构图.jpg?Expires=1744874915&OSSAccessKeyId=LTAI5tCYphFhocJemeMWmXst&Signature=m9RTtzHqf%2F4VljOu%2BJgixENOJCQ%3D
+        ArchitectureDiagramUrl: ''
         DeployScene: ECS
     NetworkMetadata:
       EnablePrivateVpcConnection: false
