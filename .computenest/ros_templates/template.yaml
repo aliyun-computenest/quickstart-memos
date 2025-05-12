@@ -173,6 +173,8 @@ Parameters:
     MinLength: 8
     MaxLength: 30
     AssociationProperty: ALIYUN::ECS::Instance::Password
+    AssociationPropertyMetadata:
+      Random: true
   ZoneId:
     Type: String
     Label:
@@ -256,17 +258,12 @@ Resources:
           - Ref: EcsVpc
           - Ref: VpcId
       SecurityGroupIngress:
-        - PortRange: 8080/8080
-          Priority: 1
-          SourceCidrIp: 0.0.0.0/0
-          IpProtocol: tcp
-          NicType: internet
         - PortRange: 22/22
           Priority: 1
           SourceCidrIp: 0.0.0.0/0
           IpProtocol: tcp
           NicType: internet
-        - PortRange: 8000/8000
+        - PortRange: 5230/5230
           Priority: 1
           SourceCidrIp: 0.0.0.0/0
           IpProtocol: tcp
@@ -323,44 +320,20 @@ Resources:
       CommandContent:
         Fn::Sub:
           - |
-
-            # 设置需要检查的服务名称
-            SERVICE_NAME="memos"
-
-            # 获取容器ID
-            CONTAINER_ID=$(docker compose ps -q $SERVICE_NAME)
-
-            # 检查容器健康状态
-            check_health_status() {
-              STATUS=$(docker inspect --format='{{.State.Health.Status}}' $CONTAINER_ID)
-
-              if [ "$STATUS" == "healthy" ]; then
-                echo "Container $SERVICE_NAME is healthy."
-                return 0
-              else
-                echo "Container $SERVICE_NAME status: $STATUS. Waiting..."
-                return 1
-              fi
-            }
-
-            # 循环检查健康状态，直到服务变为healthy
-            while true; do
-              if check_health_status; then
-                exit 0
-              fi
-              sleep 10
-            done
+            cd /root/memos/scripts
+            docker compose up -d
+            sleep 30
 
           - RegionId:
               Ref: ALIYUN::Region
 Outputs:
-  open-webui_address:
+  Memos_address:
     Description:
-      en: open-webui address.
-      zh-cn: open-webui 访问页面。
+      en: Memos address
+      zh-cn: Memos 访问地址
     Value:
       Fn::Sub:
-        - http://${ServerAddress}:8080
+        - http://${ServerAddress}:5230
         - ServerAddress:
             Fn::Select:
               - 0
@@ -422,6 +395,61 @@ Metadata:
             zh-cn: 付费时长
             en: Pay Period
           Value: '${PayPeriod} ${PayPeriodUnit}'
+      PredefinedParameters:
+        - Name: 热卖套餐，特价99元/年（限购1台）
+          Parameters:
+            EcsInstanceType: ecs.e-c1m1.large
+            SystemDiskCategory: cloud_essd_entry
+            SystemDiskSize: 40
+            InternetChargeType: PayByBandwidth
+            InternetMaxBandwidthOut: 3
+            PayPeriodUnit: Month
+            PayPeriod: 12
+            PayType: PrePaid
+          OrderList:
+            - EcsInstanceType
+            - SystemDiskCategory
+            - SystemDiskSize
+            - InternetChargeType
+            - InternetMaxBandwidthOut
+            - PayPeriodUnit
+            - PayPeriod
+            - PayType
+          Type: Normal
+          Description: 固定带宽不限流量，新老同享，上云首选！
+        - Name: 尝鲜套餐，只需0.3元/小时
+          Parameters:
+            EcsInstanceType: ecs.e-c1m1.large
+            SystemDiskCategory: cloud_essd_entry
+            SystemDiskSize: 40
+            InternetChargeType: PayByBandwidth
+            InternetMaxBandwidthOut: 3
+            PayPeriodUnit: Month
+            PayPeriod: 12
+            PayType: PostPaid
+          OrderList:
+            - EcsInstanceType
+            - SystemDiskCategory
+            - SystemDiskSize
+            - InternetChargeType
+            - InternetMaxBandwidthOut
+            - PayPeriodUnit
+            - PayPeriod
+            - PayType
+          Type: Normal
+          Description: 可用300元学生专属代金券抵扣！<a href="https://university.aliyun.com" target="_blank">立即领取</a>
+        - Name: 自定义套餐
+          Parameters: {}
+          OrderList:
+            - EcsInstanceType
+            - SystemDiskCategory
+            - SystemDiskSize
+            - InternetChargeType
+            - InternetMaxBandwidthOut
+            - PayPeriodUnit
+            - PayPeriod
+            - PayType
+          Type: Custom
       CustomFields:
         - Key: InstancePassword
       CostRelatedKeys:
