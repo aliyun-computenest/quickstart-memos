@@ -1,88 +1,62 @@
 Service:
-  RegionId: cn-hangzhou
   DeployType: ros
   DeployMetadata:
+    SupplierDeployMetadata:
+      DeployTimeout: 7200
+      ArtifactRelation:
+        centos_7:
+          ArtifactId: ${Artifact.Artifact_1.ArtifactId}
+          ArtifactVersion: ${Artifact.Artifact_1.ArtifactVersion}
+      SupplierTemplateConfigs:
+        - Name: 模板1
+          Url: 
+            https://service-info-private.oss-cn-hangzhou.aliyuncs.com/1853370294850618/template/1e433483-2213-4b5c-8846-bae913f8bab3.json?Expires=1747131108&OSSAccessKeyId=LTAI5tCYphFhocJemeMWmXst&Signature=D%2Fn4%2B4wuLn4EnCpkuPyr54VHoEU%3D
+          PredefinedParameters: []
+          AllowedRegions:
+            - cn-beijing
+            - cn-hangzhou
+            - cn-heyuan
     TemplateConfigs:
-      - Name: 单机版
-        Url: ros_templates/template.yaml
+      - Name: 模板1
+        Url: ros_templates/template1.yaml
         AllowedRegions:
           - cn-beijing
           - cn-hangzhou
           - cn-heyuan
-        PredefinedParameters:
-          - Name: 热卖套餐，特价99元/年（限购1台）
-            Parameters:
-              EcsInstanceType:
-                - ecs.e-c1m1.large
-              SystemDiskCategory: cloud_essd_entry
-              SystemDiskSize: 40
-              InternetChargeType: PayByBandwidth
-              InternetMaxBandwidthOut: 3
-              PayPeriodUnit: Month
-              PayPeriod: 12
-              PayType: PrePaid
-            OrderList:
-              - EcsInstanceType
-              - SystemDiskCategory
-              - SystemDiskSize
-              - InternetChargeType
-              - InternetMaxBandwidthOut
-              - PayPeriodUnit
-              - PayPeriod
-              - PayType
-            Type: Normal
-            Description: 固定带宽不限流量，新老同享，上云首选！
-          - Name: 尝鲜套餐，只需0.3元/小时
-            Parameters:
-              EcsInstanceType:
-                - ecs.e-c1m1.large
-              SystemDiskCategory: cloud_essd_entry
-              SystemDiskSize: 40
-              InternetChargeType: PayByBandwidth
-              InternetMaxBandwidthOut: 3
-              PayType: PostPaid
-            OrderList:
-              - EcsInstanceType
-              - SystemDiskCategory
-              - SystemDiskSize
-              - InternetChargeType
-              - InternetMaxBandwidthOut
-              - PayPeriodUnit
-              - PayPeriod
-              - PayType
-            Type: Normal
-            Description: 可用300元学生专属代金券抵扣！
-          - Name: 自定义套餐
-            Parameters: {}
-            OrderList:
-              - EcsInstanceType
-              - SystemDiskCategory
-              - SystemDiskSize
-              - InternetChargeType
-              - InternetMaxBandwidthOut
-              - PayPeriodUnit
-              - PayPeriod
-              - PayType
-            Type: Custom
+        PredefinedParameters: []
         DeployScene: ECS
+        OutputConfigs:
+          - OutputKey: __biubiu__
+            EnableWebProxy: false
     NetworkMetadata:
       EnablePrivateVpcConnection: false
       EnableReversePrivateVpcConnection: false
     ServiceInstanceNameRule:
-      Prefix: memos-
       UseDefaultValue: false
   OperationMetadata:
     SupportBackup: false
     PrometheusConfigMap:
-      单机版:
+      模板1:
         EnablePrometheus: false
   ServiceType: private
   ServiceInfo:
     - Agreements: []
-      Image: resources/icons/service_logo.jpg
+      Image: resources/icons/service_logo_zh-CN.png
       Locale: zh-CN
       Name: Memos社区版
       ShortDescription: Memos 是一款注重隐私的轻量级笔记解决方案，可让您轻松捕捉和分享您的想法。
       Softwares: []
   ShareType: Public
   ApprovalType: Manual
+Artifact:
+  Artifact_1:
+    ArtifactType: EcsImage
+    ArtifactName: memos
+    Description: memos
+    ArtifactProperty:
+      ImageId: m-t4n3dwpg0jwfy4lr4vp8
+      RegionId: ap-southeast-1
+    SupportRegionIds:
+      - cn-beijing
+      - cn-heyuan
+      - cn-hangzhou
