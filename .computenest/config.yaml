@@ -9,8 +9,7 @@ Service:
           ArtifactVersion: ${Artifact.Artifact_1.ArtifactVersion}
       SupplierTemplateConfigs:
         - Name: 模板1
-          Url: 
-            https://service-info-private.oss-cn-hangzhou.aliyuncs.com/1853370294850618/template/1e433483-2213-4b5c-8846-bae913f8bab3.json?Expires=1747131108&OSSAccessKeyId=LTAI5tCYphFhocJemeMWmXst&Signature=D%2Fn4%2B4wuLn4EnCpkuPyr54VHoEU%3D
+          Url: ros_templates/template.yaml
           PredefinedParameters: []
           AllowedRegions:
             - cn-beijing
@@ -18,7 +17,7 @@ Service:
             - cn-heyuan
     TemplateConfigs:
       - Name: 模板1
-        Url: ros_templates/template1.yaml
+        Url: ros_templates/template.yaml
         AllowedRegions:
           - cn-beijing
           - cn-hangzhou
@@ -41,7 +40,7 @@ Service:
   ServiceType: private
   ServiceInfo:
     - Agreements: []
-      Image: resources/icons/service_logo_zh-CN.png
+      Image: resources/icons/service_logo.png
       Locale: zh-CN
       Name: Memos社区版
       ShortDescription: Memos 是一款注重隐私的轻量级笔记解决方案，可让您轻松捕捉和分享您的想法。
